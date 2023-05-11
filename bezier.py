@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
+import sympy as sp
 
 """
 三阶贝塞尔曲线
@@ -138,7 +138,20 @@ def smoothing_base_bezier(date_x, date_y, k=0.5, inserted=100, closed=False):
 
     return out.T[0], out.T[1]
 
+"""
+验证函数1: 一元多次方程
+"""
+def fx_1(x):
+    x, y = sp.symbols('x y')
+    y = 0.02 * sp.Pow(x, 4) + 3 * sp.Pow(x, 3) + 8 * sp.Pow(x, 2) + 7 * x
+    y_ = sp.diff(y, x)
+    
+    return y, y_
+    
+
+
 if __name__ == '__main__':
+    
     x = np.array([2, 4, 4, 3, 2])
     y = np.array([2, 2, 4, 3, 4])
 
