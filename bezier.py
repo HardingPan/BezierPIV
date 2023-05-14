@@ -136,7 +136,7 @@ def smoothing_base_bezier(date_x, date_y, k=0.5, inserted=100, closed=False):
     out.append(group[-1:])
     out = np.vstack(out)
 
-    return out.T[0], out.T[1]
+    return out.T[0], out.T[1], crt_points
 
 """
 求切线函数(递归法)
@@ -145,7 +145,7 @@ def smoothing_base_bezier(date_x, date_y, k=0.5, inserted=100, closed=False):
     t 为 贝塞尔参数
     
 """
-def bezier_k(control_points, t):
+def bezier_tangent(control_points, t):
     temp_points = []
     
     if len(control_points) == 2:
@@ -154,22 +154,22 @@ def bezier_k(control_points, t):
     for i in range(len(control_points) - 1):
         temp_points.append((t * control_points[i][0] + (1-t) * control_points[i+1][0], t * control_points[i][1] + (1-t) * control_points[i+1][1]))
         
-    return bezier_k(temp_points, t)
+    return bezier_tangent(temp_points, t)
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
     
-    x = np.array([2, 4, 4, 3, 2])
-    y = np.array([2, 2, 4, 3, 4])
+    # x = np.array([2, 4, 4, 3, 2])
+    # y = np.array([2, 2, 4, 3, 4])
 
-    plt.plot(x, y, 'ro')
-    x_curve, y_curve = smoothing_base_bezier(x, y, k=0.3, closed=True)
-    plt.plot(x_curve, y_curve, label='$k=0.3$')
-    x_curve, y_curve = smoothing_base_bezier(x, y, k=0.4, closed=True)
-    plt.plot(x_curve, y_curve, label='$k=0.4$')
-    x_curve, y_curve = smoothing_base_bezier(x, y, k=0.5, closed=True)
-    plt.plot(x_curve, y_curve, label='$k=0.5$')
-    x_curve, y_curve = smoothing_base_bezier(x, y, k=0.6, closed=True)
-    plt.plot(x_curve, y_curve, label='$k=0.6$')
-    plt.legend(loc='best')
-    plt.savefig('./t1.png')
+    # plt.plot(x, y, 'ro')
+    # x_curve, y_curve, cps = smoothing_base_bezier(x, y, k=0.3, closed=True)
+    # plt.plot(x_curve, y_curve, label='$k=0.3$')
+    # x_curve, y_curve = smoothing_base_bezier(x, y, k=0.4, closed=True)
+    # plt.plot(x_curve, y_curve, label='$k=0.4$')
+    # x_curve, y_curve = smoothing_base_bezier(x, y, k=0.5, closed=True)
+    # plt.plot(x_curve, y_curve, label='$k=0.5$')
+    # x_curve, y_curve = smoothing_base_bezier(x, y, k=0.6, closed=True)
+    # plt.plot(x_curve, y_curve, label='$k=0.6$')
+    # plt.legend(loc='best')
+    # plt.savefig('./t1.png')
