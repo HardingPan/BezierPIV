@@ -139,15 +139,22 @@ def smoothing_base_bezier(date_x, date_y, k=0.5, inserted=100, closed=False):
     return out.T[0], out.T[1]
 
 """
-验证函数1: 一元多次方程
+求切线函数(递归法)
+输入：
+    control_points 为 控制点列表,形式为[(x_1, y_1),(x_2, y_2),...,(x_n, y_n)]
+    t 为 贝塞尔参数
+    
 """
-def fx_1(x):
-    x, y = sp.symbols('x y')
-    y = 0.02 * sp.Pow(x, 4) + 3 * sp.Pow(x, 3) + 8 * sp.Pow(x, 2) + 7 * x
-    y_ = sp.diff(y, x)
+def bezier_k(control_points, t):
+    temp_points = []
     
-    return y, y_
+    if len(control_points) == 2:
+        return control_points
     
+    for i in range(len(control_points) - 1):
+        temp_points.append((t * control_points[i][0] + (1-t) * control_points[i+1][0], t * control_points[i][1] + (1-t) * control_points[i+1][1]))
+        
+    return bezier_k(temp_points, t)
 
 
 if __name__ == '__main__':
